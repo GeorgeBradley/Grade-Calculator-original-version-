@@ -118,6 +118,9 @@ int Student::GetGrade() const {
 	return AddedGrade;
 }*/
 
+std::string DidStudentPass(int iGrade) {
+	return (iGrade > 70) ? "Yes" : "No";
+}
 //Code self explanatory
 double AverageGrade(const std::vector<Student>& objStudents)
 {
@@ -139,9 +142,10 @@ std::string CalculateGradeLetter(const double iGrade, const std::vector<Grade>& 
 void DisplayGradeResult(const std::vector<Student>& objStudents, const std::vector<Grade>& objGrades) {
 	for (const Student& Student : objStudents)
 	{
-		std::cout << "****" << std::endl;
-		std::cout << "Student: " << Student.GetName() << std::endl;
-		std::cout << "Grade: " << CalculateGradeLetter(Student.GetGrade(),objGrades) << std::endl;
+		std::cout << "****\n";
+		std::cout << "Student: " << Student.GetName() << "\n";
+		std::cout << "Grade: " << CalculateGradeLetter(Student.GetGrade(),objGrades) << "\n";
+		std::cout << "Did student pass?: " << DidStudentPass(Student.GetGrade()) << "\n";
 	}
 	std::cout << std::endl;
 }
@@ -166,12 +170,12 @@ void AddStudent(std::vector<Student>& objStudents)
 }
 
 void TestData(std::vector<Student>& objStudents) {
-	objStudents.push_back(Student("George", 1 ));
-	objStudents.push_back(Student("Jack", 10));
-	objStudents.push_back(Student("Josh", 40));
-	objStudents.push_back(Student("Oli", 60));
-	objStudents.push_back(Student("Josh", 80));
-	objStudents.push_back(Student("Stephen", 100));
+	objStudents.emplace_back(Student("George", 1 ));
+	objStudents.emplace_back(Student("Jack", 10));
+	objStudents.emplace_back(Student("Josh", 40));
+	objStudents.emplace_back(Student("Oli", 60));
+	objStudents.emplace_back(Student("Josh", 80));
+	objStudents.emplace_back(Student("Stephen", 100));
 }
 //Student findHighestScoringStudent( std::vector<Student>& students)
 //{
@@ -206,12 +210,8 @@ void DisplayLowestHighestScoringStudent( std::vector<Student>& objStudents)
 		[](auto& a, auto& b) {
 		return a.GetGrade() < b.GetGrade();
 		});
-
-	std::cout << "The person with the highest score is " 
-		<< highest->GetName()
-		<< " who got " << highest->GetGrade() << "\n" 
-		<< "The person with the lowest score is " << lowest->GetName()
-		<< " who got " << lowest->GetGrade() << "\n";
+	std::cout << "Highest scorer is " << highest->GetName() << " who got " << highest->GetGrade() << "\n";
+	std::cout << "Lowest scorer is " << lowest->GetName() << " who got " << lowest->GetGrade() << "\n";
 }
 
 //void DisplayHighestScorer(std::vector<Student>& objStudents) 
