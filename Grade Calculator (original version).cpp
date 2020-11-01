@@ -34,90 +34,6 @@ std::string Student::GetName() const {
 int Student::GetGrade() const {
 	return m_iGrade;
 }
-
-//End of interface link 
-//Stand alone functions (nothing to do with the Student class itself)
-//returns the index of the vector of the student who got the highest grade
-//std::size_t HighestGradeIndex(std::vector<Student>& objStudents) {
-//	std::size_t stIndex = 0;
-//	int iHighestGrade = 0;
-//	for (std::size_t st = 0; st < objStudents.size(); st++)
-//	{
-//		if (objStudents.at(st).GetGrade() > iHighestGrade)
-//		{
-//			iHighestGrade = objStudents.at(st).GetGrade();
-//			stIndex = st;
-//		}
-//	}
-//	return stIndex;
-//}
-//returns the index of the vector of the student who got the lowest grade
-//std::size_t LowestGradeIndex(std::vector<Student>& objStudents)
-//{
-//	std::size_t stIndex = 0;
-//	int iLowestGrade = INT_MAX;
-//	for (std::size_t st = 0; st < objStudents.size(); st++) {
-//		if (objStudents.at(st).GetGrade() < iLowestGrade)
-//		{
-//			iLowestGrade = objStudents.at(st).GetGrade();
-//			stIndex = st;
-//		}
-//	}
-//	return stIndex;
-//}
-
-//Through its parameters the average value is passed in to subsequently check its value with the if / else logic
-/*std::string CalculateGradeLetter(double dAverage)
-{
-	if (dAverage <= 10) {
-		return "F";
-	}
-	else if (dAverage <= 30) {
-		return "E";
-	}
-	else if (dAverage <= 50) {
-		return "D";
-	}
-	else if (dAverage <= 70) {
-
-		return "C";
-	}
-	else if (dAverage <= 80) {
-		return "B";
-	}
-	else if (dAverage <= 90) {
-		return "A";
-	}
-	else if (dAverage <= 100)
-	{
-		return "A*";
-	}
-	else
-	{
-		return "Invalid";
-	}
-}
-*/
-//Code self explanatory
-/*void WhoGotTheHighest(std::vector<Student>& objStudents) {
-
-	int iHighestGrade = objStudents.at(HighestGradeIndex(objStudents)).GetGrade();
-	int iLowestGrade = objStudents.at(LowestGradeIndex(objStudents)).GetGrade();
-	std::cout << "The person with the highest score is " << objStudents.at(HighestGradeIndex(objStudents)).GetName() << " who got " << iHighestGrade << std::endl;
-	std::cout << "The person with the lowest score is " << objStudents.at(LowestGradeIndex(objStudents)).GetName() << " who got " << iLowestGrade << std::endl;
-}
-*/
-
-//Code self explanatory
-/*int AddGrade(std::vector<Student>& objStudents) {
-
-	int AddedGrade = 0;
-	for (Student& objStudent : objStudents) {
-		AddedGrade += objStudent.GetGrade();
-	}
-	return AddedGrade;
-}*/
-
 std::string DidStudentPass(int iGrade) {
 	return (iGrade > 70) ? "Yes" : "No";
 }
@@ -131,10 +47,9 @@ double AverageGrade(const std::vector<Student>& objStudents)
 }
 std::string CalculateGradeLetter(const double iGrade, const std::vector<Grade>& objGrades)
 {
-	for (const auto grade : objGrades) {
-		if (iGrade <= grade.m_iGradeBoundary) {
-			return grade.m_sGradeLetter;
-		}
+	auto it = std::find_if(objGrades.begin(), objGrades.end(), [&](auto& objGrade) {return iGrade <= objGrade.m_iGradeBoundary; });
+	if (it != objGrades.end()) {
+		return it->m_sGradeLetter;
 	}
 	return "Unknown";
 }
